@@ -19,5 +19,15 @@
             </li>
         </ul>
     </div>
+    <p>A guy walks into an inherited codebase and orders an integer range. RangeUtils replies:</p>
+    <div class="code">
+        <pre id="joke">
+    import guava.*;
+
+    public List<Integer> getRange(int range) {
+        return Ints.asList(Ints.toArray(ContiguousSet.create(Range.closed(0, range - 1), DiscreteDomain.integers())));
+    }
+        </pre>
+    </div>
 	</body>
 </html>
