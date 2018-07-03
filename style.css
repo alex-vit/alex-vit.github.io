@@ -2,6 +2,11 @@ body {
     margin: 0;
 }
 
+p {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
 h1#page-caption {
     width: 100%;
     text-align: center;
