@@ -7,9 +7,10 @@ h1#page-caption {
     text-align: center;
     background: #222;
     color: white;
-    font-size: 3em;
-    line-height: 3em;
+    font-size: 2em;
+    line-height: 1em;
     margin: 0;
+    padding: 1em 0;
 }
 
 div#menu > ul {
@@ -27,5 +28,5 @@ div#menu > ul > li > a {
     padding: 1em;
     text-decoration: none;
     color: white;
-    font-size: 2em;
+    font-size: 1.6em;
 }
