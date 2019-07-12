@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    text-align: center;
+}
+
+#content {
+    display: inline-block;
+    max-width: 40em;
+    text-align: left;
+}
+
+div.code {
+    overflow: scroll;
+    background: #eee;
+}
+
+#blog-posts {
+    list-style: none;
+    text-decoration: none;
+}
+
+#blog-posts>li {
+    font-size: 1.6em;
+    margin: .6em .3em;
+}
+
+#blog-posts>li>.date {
+    font-family: monospace;
+    font-size: .6em;
+}
+
+@media only screen 
+  and (min-width: 320px) 
+  and (max-width: 480px)
+  and (orientation: portrait) {
+    #blog-posts>li>.date {
+        display: block;
+        font-family: monospace;
+        font-size: .6em;
+    }
+}
