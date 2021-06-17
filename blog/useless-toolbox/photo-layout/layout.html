@@ -1,0 +1,18 @@
+<!doctype html>
+<style type="text/css">
+	.shape {
+		display:inline-block;
+	}
+</style>
+<body>
+	<script type="text/javascript" src="layout.js"></script>
+	<script type="text/javascript">
+
+	var n = Math.random() * 7 + 3;
+	var shapes = randomShapes(n);
+	var layout = layoutForShapes(shapes);
+	
+	render(shapes, layout);
+
+	</script>
+</body>

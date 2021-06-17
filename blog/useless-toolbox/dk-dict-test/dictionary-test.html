@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Dictionary test</title>
+		<script type="text/javascript" src="js/dictionary.js"></script>
+		<script type="text/javascript" src="js/test-functions.js"></script>
+		<style type="text/css">
+			div.word-links{
+				padding:12px;
+				width:80%;
+				margin:0 auto;
+			}
+			.word-links a{
+				margin-right:20px;
+			}
+			h3{
+				margin:0px;
+			}
+			h3, a, a:visited {
+				color:#aaa;
+			}
+			a:hover {
+				color:black;
+			}
+			.generatedtext {
+				border:1px dashed silver;
+				width:80%;
+				min-height:10px;
+				margin:0 auto;
+				margin-top:30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="word-links">
+			<script type="text/javascript">
+				document.write(createLinks());
+			</script>
+		</div>
+		<div class="generatedtext" id="generatedtext"></div>
+	</body>
+</html>
