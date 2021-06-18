@@ -1,0 +1,44 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+#drop {
+    border: 5px dashed silver;
+    color: silver;
+    font-size: 2em;
+    line-height: 5em;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%; 
+}
+
+#dict-table {
+    border-spacing: 0;
+    table-layout: fixed;
+    width: 100%;
+}
+
+#dict-table th {
+    text-align: left;
+}
+
+#dict-table th:nth-child(1) {
+    width: 160px;
+    word-wrap: break-word;
+}
+
+tr:hover {
+    background: #eee;
+}
+
+td > div {
+    padding: .5em;
+}
+
+td > div:focus {
+    background: white;
+}
+
+.edited {
+	background: LemonChiffon;
+}

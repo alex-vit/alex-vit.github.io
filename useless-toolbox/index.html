@@ -17,12 +17,6 @@
             way to constructively procrastinate,
             and sometimes (almost never) actually save time.
         </p>
-        <p>
-            They represent an era, a simpler time. I would program to make the computer solve a problem I had. My
-            feedback loop was almost instant -
-            just refresh the browser. No outside requirements, tickets, code styles, or VCS. It was all fun and incredibly
-            fulfilling.
-        </p>
         <p>Let's look inside my mostly useless useful toolbox.</p>
 
         <h2>Pound Yen continues being boring in this hourly update</h2>
@@ -124,8 +118,59 @@ solution.sentiment(text_from_db)
         </p>
 
         <h2>YAML toys</h2>
+        <pre>Last modified 2015.</pre>
+        <p>
+            At another job, where I managed development of a massively miscarried mobile app, we had to deal with yml
+            translation files - one per language.
+            It was inconvenient as you couldn't see all the translations in one place. So I made myself some tools.
+        </p>
 
-        <h3>To be continued...</h3>
+        <h3>A converter</h3>
+        <p>
+            This <a href="yml-converter/">CSV &lt;-&gt; YAML converter</a> let's you drag either a CSV file or multiple
+            YAML files,
+            and download the results in the other format. The
+        <pre>triggerDownload</pre>
+        function is broken. But should be an easy fix for anyone willing.
+        </p>
+
+        <h3>An editor</h3>
+        <p>
+            <a href="yml-editor.png">
+                <img src="yml-editor.png" style="border: 3px solid silver;" />
+            </a>
+        </p>
+        <p>
+            This <a href="yml-editor/v0.4/">editor</a> is a slightly more useful version of the converter, as it lets
+            you view and edit the
+            entire dictionary in a nice table, despite the also broken download.
+            It handles missing keys and highlights changed keys.
+        </p>
+        <p>
+            Try it out with this samle <a href="yml-editor/lang-files.zip">lang-files.zip</a>.
+        </p>
+
+        <h2>A retrospective</h2>
+        <p>
+            This box of code represents an era, a simpler time. I would program to make the computer solve a problem I
+            had.
+            No outside requirements, tickets, code styles, or VCS. I'd write shitty JS code, copy paste it into a "v2"
+            folder instead of VCS,
+            and send the results to a friend. Anyone with a browser could run my program.
+        </p>
+        <p>
+            Not knowing or caring about good code, architecture, "better" or faster languages, git, and a lot more - it
+            can be both liberating and productive.
+            Current me would probably never attempt a YAML file editor. I'd instead look for existing solutions, or
+            decide to make my own
+            but get paralyzed choosing tech stack, arch, setting up CI/CD etc.
+        </p>
+        <p>
+            Sometimes it's nice to forget about doing things <i>the right way</i>, ignore what you've learned over the years, and
+            just lose yourself.
+            Like a child or a puppy carelessly zipping around the park.
+        </p>
+
     </div>
 </body>
 
