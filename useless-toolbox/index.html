@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../post.css">
+    <title>Programming as a coping mechanism</title>
+</head>
+
+<body>
+    <div id="content">
+        <h1>Programming as a coping mechanism</h1>
+        <pre>2021</pre>
+        <p>
+            I've been sorting through my dropbox, and one of the folders there is simply called "code".
+            It contains a mildly amusing assortment of tiny tools that helped me cope with mundane tasks by providing a
+            way to constructively procrastinate,
+            and sometimes (almost never) actually save time on them.
+        </p>
+        <p>
+            They represent an era, a simpler time. I would program to make the computer solve a problem I had. My
+            feedback loop was almost instant -
+            just refresh the browser. No outside requirements, managers, tickets, or VCS. It was all fun and incredibly
+            fulfilling.
+        </p>
+        <p>Now on to the contents of the mostly useless useful toolbox.</p>
+
+        <h2>Pound Yen continues being boring in this hourly update</h2>
+        <pre>Last modified 2010.</pre>
+        <p>
+            My job right out of university was in a TV department of a Forex company.
+            One of our products - or shows - was an hourly summary of currency price fluctuations. Like a 3-minute video
+            with charts in the background and me or my colleagues talking about <i>"pound yen being calm in the so and
+                so timeframe"</i>. And we had to record these for all major currency pairs every hour. You'd be right to
+            think
+            one quickly ran out of imagination and different ways of saying the same boring thing.
+        </p>
+        <p>
+            So I present to you the <a href="dk-dict-test/dictionary-test.html">synonim-suggestion-thingy</a>.
+        </p>
+        <p>
+            <a href="dk-dict-test.png">
+                <img src="dk-dict-test.png" style="border: 3px solid silver;" />
+            </a>
+        </p>
+        <p>
+            You roughly know what text you'll want to record. So click the appropriate terms, and get a helpful output
+            with synonyms,
+            which you can re-roll by clicking them. Unless they consist of multiple words. Then syntax error :)
+        </p>
+
+        <h2>Escaping the graveyard shift with boxes</h2>
+        <pre>Last modified 2014.</pre>
+        <p>
+            <img src="photo-layout.png" />
+        </p>
+        <p>
+            Recording hourly and 24/5 is a team effort. We worked shifts. And we often argued about who gets what shift.
+            My then teamlead, who was French, would mutter something along the lines of <i>"oooh putane n'est pas
+                possible!"</i> (I don't know French),
+            and claim his freshly made schedule, where he coincidentally gets all the best times, and I'm stuck doing
+            graveyard shift again,
+            is the only possible arrangement.
+        </p>
+        <p>
+            So, naturally, I decided to make scheduling software.
+            I implemented it by making an HTML page with different color inline-blocks of variable width.
+            They would fall into neat 24h lines and nicely illustrate all possible schedules.
+            Team lead was not amused. Still got graveyard shifts.
+        </p>
+        <p>
+            Sadly, that code seems lost. So here, have this <a href="photo-layout/layout.html">photo layout
+                generator</a>
+            using very similar boxes and "logic" instead. (Refresh it a couple of times.)
+        </p>
+
+        <h2>Power bookmarks</h2>
+        <p>
+            Bookmarking Jira, and having to navigate to specific tickets was tedious. Same with support tickets, or
+            users in back-office.
+            So I had a set of "power bookmarks". They'd all be roughly of the form:
+        </p>
+        <pre>https://myorg.jira/browse/PRJ-${show JS prompt, append input here}</pre>
+        <p>
+            Here, <a
+                href="javascript:var code = prompt('Enter an HTTP code', '204'); if(code!=null){document.location.href = 'https://http.cat/'+code}">try
+                this</a>. Drag the link into your bookmarks bar for all your future HTTP code reference needs.
+        </p>
+
+        <h2>Reputation monitoring</h2>
+        <pre>Last modified 2012.</pre>
+        <p>
+            One bigger assignment was to monitor forums about our industry to gauge how users felt about us.
+            This entailed bookmarking and reading hundreds of threads, analyzing, summarizing, and reporting on what
+            people said.
+        </p>
+        <p>
+            So, naturally, I made a groovy + grails CRUD app to keep track of all the threads. Later added a sentiment
+            analyzer written in python,
+            so you'd immediately see what was positive or negative. This one was actually used by my teammates. Sadly,
+            don't have time to recompile
+            or run the project. Maybe I'll do it someday to show off screenshots of my awesome creation.
+        </p>
+        <p>
+            A note on python's awesomeness. It has a huge and extremely usable library ecosystem.
+            I said I made sentiment tracking in python. In reality, all I had to do was something like:
+        <pre>
+from awesomelib import solution
+
+solution.sentiment(text_from_db)
+        </pre>
+        </p>
+
+        <h2>A canvas</h2>
+        <pre>Last modified 2013.</pre>
+        <img src="canvas.png" />
+        <p>
+            A super simple <a href="canvas.html">canvas.html</a> with exactly two features:
+        <ol>
+            <li>Click and drag to draw.</li>
+            <li>Refresh to clear.</li>
+        </ol>
+        The browser itself conveniently offers a <i>"Save Image As"</i> option upon right-clicking.
+        </p>
+
+        <h2>YAML toys</h2>
+
+        <h3>To be continued...</h3>
+    </div>
+</body>
+
+</html>

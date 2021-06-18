@@ -1,0 +1,50 @@
+﻿<canvas id=c style="position:absolute;top:0;left:0;width:100%;height:100%">
+</canvas>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js">
+</script>
+<script>
+function resizeCanvas(v, w, h) {
+	var tv = document.createElement('canvas');
+	var tc = tv.getContext('2d');
+	var c = v.getContext('2d');
+	
+	tv.width = w;
+	tv.height = h;
+	tc.drawImage(v, 0, 0);
+	
+	v.width = w;
+	v.height = h;
+	c.drawImage(tv, 0, 0);
+}
+
+var v=document.getElementById('c');
+v.width=window.innerWidth;
+v.height=window.innerHeight;
+c=v.getContext('2d');
+c.fillStyle="rgba(0, 0, 200, 0.5)";
+var md = false;
+var cx = 0;
+var cy = 0;
+
+$(document).mousedown(function(e){
+    cx = e.clientX;
+    cy = e.clientY;
+    md = true;
+    c.beginPath();
+});
+$(document).mousemove(function(e){
+    if(md){
+        toX = e.clientX;
+        toY = e.clientY;
+        c.lineTo(toX, toY);
+        c.stroke();
+    }
+});
+$(document).mouseup(function(e){
+    md = false;
+});
+$(window).resize(function(){
+	resizeCanvas(v, window.innerWidth, window.innerHeight);
+});
+</script>
