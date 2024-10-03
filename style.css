@@ -1,0 +1,38 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: monospace, monospace;
+}
+
+p img {
+    width: 100%;
+}
+
+.container {
+    display: block;
+    margin: 0 auto;
+    max-width: 40em;
+}
+
+.content {
+    margin: 1em;
+}
+
+pre {
+    overflow: scroll;
+}
+
+#blog-posts>li>.date {
+    font-size: .8em;
+}
+
+@media only screen 
+  and (min-width: 320px) 
+  and (max-width: 480px)
+  and (orientation: portrait) {
+
+    .container {
+        max-width: 100%;
+    }
+
+}

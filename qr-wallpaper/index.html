@@ -4,14 +4,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="style.css" />
     <script src="qr-wallpaper.js"></script>
 </head>
 
 <body>
-    <div id="desktop-warning">Visit this site from your mobile phone. It uses your device's screen size to make the
-        wallpaper.</div>
-    <div id="container">
+    <div id="desktop-warning">
+        Visit this site from your mobile phone. It uses your device's screen size to make the wallpaper.
+    </div>
+    <div class="container">
+        <div class="content">
+            <p>This is more of a toy project than a post.</p>
+            <p>During COVID-19 lockdowns, you were required to have a QR code of a vaccination certificate on you at all times. I made this to help friends generate a wallpaper that fits a square QR code nicely between system UI elements.</p>
+        </div>
         <div id="canvas-container">
             <canvas id="canvas"></canvas>
         </div>
@@ -22,7 +28,6 @@
             <input id="background-color" type="color" value="#000000" />
             <input id="download-button" type="button" value="Download wallpaper" />
         </div>
-    </div>
     </div>
 </body>
 
