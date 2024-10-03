@@ -1,4 +1,8 @@
-body{
+* {
+    box-sizing: border-box;
+}
+
+body {
     margin: 0;
     padding: 0;
     font-family: monospace, monospace;
@@ -26,10 +30,7 @@ pre {
     font-size: .8em;
 }
 
-@media only screen 
-  and (min-width: 320px) 
-  and (max-width: 480px)
-  and (orientation: portrait) {
+@media only screen and (min-width: 320px) and (max-width: 480px) and (orientation: portrait) {
 
     .container {
         max-width: 100%;
