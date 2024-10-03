@@ -8,6 +8,10 @@ body {
     font-family: monospace, monospace;
 }
 
+q {
+    font-style: italic;
+}
+
 p img {
     width: 100%;
 }
