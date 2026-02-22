@@ -1,0 +1,288 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="../style.css" />
+        <title>I ported one program to 10 languages to see how an LLM thinks</title>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 1em 0;
+                font-size: 0.9rem;
+                overflow-x: auto;
+                display: block;
+            }
+            th, td {
+                padding: 0.4em 0.75em;
+                border: 1px solid var(--color-border);
+                text-align: left;
+            }
+            th {
+                background: var(--color-surface);
+                font-weight: 600;
+                color: var(--color-text);
+            }
+            td:nth-child(n+2) { text-align: right; }
+            blockquote {
+                border-left: 3px solid var(--color-accent);
+                margin: 1em 0;
+                padding: 0.5em 1em;
+                color: var(--color-text-soft);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page-wide">
+            <div class="content">
+                <a href="/">&larr; alexv.lv</a>
+
+                <h1>I ported one program to 10 languages to see how an LLM thinks</h1>
+
+                <p>
+                    I asked Claude to port a 500-line Go bank statement analyzer to 8 languages. Same logic, same tests, different stdlib.
+                    The goal wasn't the code &mdash; it was watching the LLM's internal process: where it hesitated, where it didn't,
+                    and whether it could predict its own performance.
+                </p>
+                <p>It could.</p>
+
+                <h2>The scoreboard</h2>
+
+                <table>
+                    <tr>
+                        <th>Language</th>
+                        <th>Lines</th>
+                        <th>Deliberation</th>
+                        <th>Fixups</th>
+                        <th>Web searches</th>
+                        <th>Confidence</th>
+                    </tr>
+                    <tr><td>Python + uv</td><td>253</td><td>2%</td><td>0</td><td>0</td><td>100%</td></tr>
+                    <tr><td>Nim</td><td>299</td><td>20%</td><td>1</td><td>0</td><td>95%</td></tr>
+                    <tr><td>F#</td><td>353</td><td>15%</td><td>0</td><td>0</td><td>95%</td></tr>
+                    <tr><td>Crystal</td><td>363</td><td>15%</td><td>0</td><td>0</td><td>93%</td></tr>
+                    <tr><td>Odin</td><td>432</td><td>80%</td><td>2</td><td>4</td><td>70%</td></tr>
+                    <tr><td>Java 8</td><td>495</td><td>3%</td><td>0</td><td>0</td><td>100%</td></tr>
+                    <tr><td>JS (Node+JSDoc)</td><td>524</td><td>5%</td><td>0</td><td>0</td><td>100%</td></tr>
+                    <tr><td>Go (zero-dep)</td><td>540</td><td>5%</td><td>0</td><td>0</td><td>100%</td></tr>
+                    <tr><td>Pascal</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>fine</td></tr>
+                    <tr><td>OCaml</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>~85%</td></tr>
+                </table>
+
+                <p>&ldquo;Deliberation&rdquo; = fraction of thinking time spent <i>worrying</i> about the language rather than writing code.</p>
+
+                <h2>The interesting finding: compound uncertainty</h2>
+
+                <p>
+                    Each Odin stdlib call was ~75% confidence. Reasonable. But 15 such calls in a 432-line program:
+                </p>
+                <blockquote>0.75<sup>15</sup> = 1.3% chance of all-correct</blockquote>
+                <p>
+                    That's why Odin needed 4 web searches and 2 fixups while Nim (same program, similar language tier) needed zero.
+                    The bottleneck isn't any single unknown &mdash; it's the product of many small ones.
+                </p>
+
+                <table>
+                    <tr>
+                        <th>Language</th>
+                        <th>Confidence/call</th>
+                        <th>Stdlib calls</th>
+                        <th>P(all correct)</th>
+                        <th>Outcome</th>
+                    </tr>
+                    <tr><td>Go</td><td>100%</td><td>15</td><td>100%</td><td>0 fixups, 0 searches</td></tr>
+                    <tr><td>Python</td><td>100%</td><td>12</td><td>100%</td><td>0 fixups, 0 searches</td></tr>
+                    <tr><td>Nim</td><td>95%</td><td>12</td><td>54%</td><td>1 trivial fixup</td></tr>
+                    <tr><td>Odin</td><td>75%</td><td>15</td><td>1.3%</td><td>2 fixups, 4 searches</td></tr>
+                </table>
+
+                <p>The math predicted the outcomes almost exactly.</p>
+
+                <h2>The predicted finding: confidence calibration works</h2>
+
+                <p>
+                    Before each port, the LLM predicted its confidence, expected fixup count, and deliberation level. After writing, the actuals were compared.
+                </p>
+
+                <table>
+                    <tr>
+                        <th>Language</th>
+                        <th>Predicted confidence</th>
+                        <th>Actual</th>
+                        <th>Predicted fixups</th>
+                        <th>Actual</th>
+                        <th>Predicted deliberation</th>
+                        <th>Actual</th>
+                    </tr>
+                    <tr><td>Go</td><td>100%</td><td>100%</td><td>0</td><td>0</td><td>5%</td><td>5%</td></tr>
+                    <tr><td>Python</td><td>100%</td><td>100%</td><td>0</td><td>0</td><td>2%</td><td>2%</td></tr>
+                    <tr><td>Nim</td><td>95%</td><td>95%</td><td>0&ndash;1</td><td>1</td><td>~20%</td><td>20%</td></tr>
+                    <tr><td>F#</td><td>95%</td><td>95%</td><td>0&ndash;1</td><td>0</td><td>25&ndash;35%</td><td>15%</td></tr>
+                    <tr><td>Crystal</td><td>93%</td><td>93%</td><td>0&ndash;1</td><td>0</td><td>~15%</td><td>15%</td></tr>
+                    <tr><td>Odin</td><td>70%</td><td>70%</td><td>1&ndash;3</td><td>2</td><td>~80%</td><td>80%</td></tr>
+                    <tr><td>JS</td><td>100%</td><td>100%</td><td>0</td><td>0</td><td>~5%</td><td>5%</td></tr>
+                    <tr><td>Java 8</td><td>100%</td><td>100%</td><td>0</td><td>0</td><td>~3%</td><td>3%</td></tr>
+                </table>
+
+                <p>
+                    Confidence and fixup predictions: near-perfect. F# deliberation was the only miss &mdash; predicted 25&ndash;35%, actual 15%.
+                    Paradigm choices (pipe vs loop, Map vs Dictionary) turned out to be obvious.
+                    <b>Deliberation is driven by API uncertainty, not conceptual difficulty.</b>
+                </p>
+
+                <p>Line count predictions, however, were consistently wrong:</p>
+
+                <table>
+                    <tr>
+                        <th>Language</th>
+                        <th>Predicted lines</th>
+                        <th>Actual</th>
+                        <th>Error</th>
+                    </tr>
+                    <tr><td>Python</td><td>150&ndash;200</td><td>253</td><td>+27%</td></tr>
+                    <tr><td>F#</td><td>200&ndash;280</td><td>353</td><td>+26%</td></tr>
+                    <tr><td>JS</td><td>260&ndash;310</td><td>524</td><td>+69%</td></tr>
+                    <tr><td>Java 8</td><td>650&ndash;800</td><td>495</td><td>&minus;31%</td></tr>
+                </table>
+
+                <p>The LLM knows <i>what</i> it doesn't know. It doesn't know <i>how long things take to say</i>.</p>
+
+                <h2>What deliberation is actually about</h2>
+
+                <p>
+                    The surprise: deliberation doesn't track language difficulty, stdlib gaps, or paradigm unfamiliarity.
+                    It tracks <b>uncertainty about API names</b>.
+                </p>
+
+                <table>
+                    <tr>
+                        <th>Language</th>
+                        <th>Stdlib gaps</th>
+                        <th>API uncertainty</th>
+                        <th>Deliberation</th>
+                    </tr>
+                    <tr><td>JS/Node</td><td>Many (no CSV, no HTML escape)</td><td>None &mdash; workarounds instantly known</td><td>5%</td></tr>
+                    <tr><td>Java 8</td><td>None</td><td>None &mdash; one way to do everything</td><td>3%</td></tr>
+                    <tr><td>F#</td><td>Some (no CSV lib)</td><td>None &mdash; idiomatic choices obvious</td><td>15%</td></tr>
+                    <tr><td>Odin</td><td>Few</td><td>High &mdash; 9 &ldquo;does this exist?&rdquo; pauses</td><td>80%</td></tr>
+                </table>
+
+                <p>
+                    JS has <i>more</i> stdlib gaps than Odin for this task. But a known gap costs lines, not thinking time.
+                    An unknown API costs thinking time regardless of whether it exists.
+                </p>
+                <p>
+                    Odin has a CSV reader. The LLM wasn't sure of its exact name &mdash; that cost more deliberation
+                    than hand-rolling one in JS where it was certain no CSV module exists.
+                </p>
+
+                <h2>Java 8: the paradox</h2>
+
+                <p>
+                    Java 8 was supposed to be the pain port. No <code>var</code>, no records, no text blocks.
+                    Instead it had the <b>lowest deliberation of any language</b> (3%).
+                </p>
+                <p>
+                    Why: Java 8 is maximally constrained. One way to declare a list. One way to iterate. One way to aggregate.
+                    The design choice space is near-zero. The LLM doesn't think &mdash; it just types, at high speed, for a long time.
+                </p>
+
+                <table>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Java 8</th>
+                        <th>Go</th>
+                        <th>JS</th>
+                    </tr>
+                    <tr><td>Deliberation</td><td>3%</td><td>5%</td><td>5%</td></tr>
+                    <tr><td>Lines</td><td>495</td><td>540</td><td>524</td></tr>
+                    <tr><td>Fixups</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><td>Design choices</td><td>~0</td><td>~2</td><td>~5</td></tr>
+                </table>
+
+                <p>
+                    The irony: Java 8 is the most <i>annoying</i> language for a human but the most <i>effortless</i> for the LLM.
+                    Verbosity is measured in tokens, and tokens are cheap. Uncertainty is measured in verification pauses, and Java 8 has none.
+                </p>
+
+                <h2>Two failures, same root cause</h2>
+
+                <p>Neither Pascal nor OCaml failed because of language knowledge.</p>
+
+                <p>
+                    <b>Pascal, attempt 1:</b> The LLM read all existing ports (~1500 lines) before writing anything. Over-planned. Ran out of context. Zero lines of Pascal written.
+                </p>
+                <p>
+                    <b>Pascal, attempt 2:</b> Instructed to just start typing. It did. Hit the output token limit before emitting a single line. Pascal's <code>begin</code>/<code>end</code> verbosity made it the one port where generation itself exceeds the budget.
+                </p>
+
+                <blockquote>The first attempt failed because the LLM wasted tokens on input. The second failed because Pascal wastes tokens on output.</blockquote>
+
+                <p>
+                    <b>OCaml:</b> Confidence was ~85%. Never tested. The port died at <code>opam init</code> on Windows &mdash; Cygwin PATH issues consumed the entire session. Zero lines of OCaml written.
+                </p>
+
+                <p>The &ldquo;come back in 3 years and build it&rdquo; test:</p>
+
+                <table>
+                    <tr>
+                        <th>Language</th>
+                        <th>Revisit command</th>
+                    </tr>
+                    <tr><td>Go</td><td><code>go build</code></td></tr>
+                    <tr><td>Python</td><td><code>uv run app.py</code></td></tr>
+                    <tr><td>Nim</td><td><code>nimble build</code></td></tr>
+                    <tr><td>F#</td><td><code>dotnet build</code></td></tr>
+                    <tr><td>Odin</td><td><code>odin build .</code></td></tr>
+                    <tr><td>JS</td><td><code>node app.js</code></td></tr>
+                    <tr><td>Java 8</td><td><code>javac *.java && java app.Main</code></td></tr>
+                    <tr><td>OCaml</td><td>Install opam. Figure out Cygwin. Fix PATH. Hope <code>opam init</code> works. Install compiler switch. Install dune. Install deps. Maybe build.</td></tr>
+                </table>
+
+                <p>Toolchain accessibility is a language feature.</p>
+
+                <h2>F#: where functional actually mattered</h2>
+
+                <p>Most ports converge to the same shape regardless of syntax. F# was the exception. Its aggregation pipeline is structurally different:</p>
+
+                <p><b>Go</b> (10 lines, imperative map-accumulate-sort):</p>
+<pre><code>totals := map[string]float64{}
+for _, t := range transfers {
+    totals[t.Category] += t.AmountF
+}
+// ... sort, collect into slice</code></pre>
+
+                <p><b>F#</b> (4 lines, pipeline):</p>
+<pre><code>transfers
+|> List.groupBy (fun t -> t.Category)
+|> List.map (fun (cat, ts) -> { Name = cat; Total = ts |> List.sumBy (fun t -> t.AmountF) })
+|> List.sortByDescending (fun nt -> nt.Total)</code></pre>
+
+                <p>But this only mattered for aggregation and the main processing flow. CSV parsing, file I/O, HTML generation &mdash; all converged to the same imperative shape in every language.</p>
+
+                <h2>The takeaways</h2>
+
+                <p><b>1. Training data density is everything.</b> Go/Python = zero friction. Nim/Crystal = smooth. Odin = constant verification pauses. Language quality is irrelevant if the LLM can't recall the stdlib.</p>
+
+                <p><b>2. Compound uncertainty kills.</b> 75% confidence per API call sounds fine. Across 15 calls it's 1.3%. Small unknowns multiply into mandatory verification loops.</p>
+
+                <p><b>3. The LLM knows what it doesn't know.</b> Confidence and fixup predictions were near-perfect across 8 languages. Line count predictions were not. Calibration works for difficulty; it fails for effort.</p>
+
+                <p><b>4. Verbosity is free, uncertainty is expensive.</b> Go (540 lines) was faster to write than Odin (432 lines). Java 8 (495 lines, 3% deliberation) was the most effortless port. Token cost is irrelevant next to verification cost.</p>
+
+                <p><b>5. Constraint helps LLMs.</b> Languages with fewer ways to express the same thing (Go, Java) produce lower deliberation than languages with more choices (JS, Nim). The boilerplate is the documentation.</p>
+
+                <p><b>6. Setup is a language feature.</b> Two languages with known-good LLM confidence (Pascal ~fine, OCaml ~85%) produced zero lines of code. Process killed them, not knowledge.</p>
+            </div>
+        </div>
+
+        <div class="page-wide">
+            <div class="content">
+                <div style="text-align: center">
+                    <a href="/">alexv.lv</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
