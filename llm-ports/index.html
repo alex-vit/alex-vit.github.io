@@ -41,7 +41,7 @@
                 <h1>I ported one program to 10 languages to see how an LLM thinks</h1>
 
                 <p>
-                    I asked Claude to port a 500-line Go bank statement analyzer to 8 languages. Same logic, same tests, different stdlib.
+                    I asked Claude to port a 500-line Go bank statement analyzer to 10 languages. Same logic, same tests, different stdlib.
                     The goal wasn't the code &mdash; it was watching the LLM's internal process: where it hesitated, where it didn't,
                     and whether it could predict its own performance.
                 </p>
@@ -177,14 +177,10 @@
                     than hand-rolling one in JS where it was certain no CSV module exists.
                 </p>
 
-                <h2>Java 8: the paradox</h2>
+                <h2>Java 8: the dream</h2>
 
                 <p>
-                    Java 8 was supposed to be the pain port. No <code>var</code>, no records, no text blocks.
-                    Instead it had the <b>lowest deliberation of any language</b> (3%).
-                </p>
-                <p>
-                    Why: Java 8 is maximally constrained. One way to declare a list. One way to iterate. One way to aggregate.
+                    Java 8 is maximally constrained. One way to declare a list. One way to iterate. One way to aggregate.
                     The design choice space is near-zero. The LLM doesn't think &mdash; it just types, at high speed, for a long time.
                 </p>
 
@@ -223,23 +219,6 @@
                     <b>OCaml:</b> Confidence was ~85%. Never tested. The port died at <code>opam init</code> on Windows &mdash; Cygwin PATH issues consumed the entire session. Zero lines of OCaml written.
                 </p>
 
-                <p>The &ldquo;come back in 3 years and build it&rdquo; test:</p>
-
-                <table>
-                    <tr>
-                        <th>Language</th>
-                        <th>Revisit command</th>
-                    </tr>
-                    <tr><td>Go</td><td><code>go build</code></td></tr>
-                    <tr><td>Python</td><td><code>uv run app.py</code></td></tr>
-                    <tr><td>Nim</td><td><code>nimble build</code></td></tr>
-                    <tr><td>F#</td><td><code>dotnet build</code></td></tr>
-                    <tr><td>Odin</td><td><code>odin build .</code></td></tr>
-                    <tr><td>JS</td><td><code>node app.js</code></td></tr>
-                    <tr><td>Java 8</td><td><code>javac *.java && java app.Main</code></td></tr>
-                    <tr><td>OCaml</td><td>Install opam. Figure out Cygwin. Fix PATH. Hope <code>opam init</code> works. Install compiler switch. Install dune. Install deps. Maybe build.</td></tr>
-                </table>
-
                 <p>Toolchain accessibility is a language feature.</p>
 
                 <h2>F#: where functional actually mattered</h2>
@@ -247,17 +226,17 @@
                 <p>Most ports converge to the same shape regardless of syntax. F# was the exception. Its aggregation pipeline is structurally different:</p>
 
                 <p><b>Go</b> (10 lines, imperative map-accumulate-sort):</p>
-<pre><code>totals := map[string]float64{}
+<pre>totals := map[string]float64{}
 for _, t := range transfers {
     totals[t.Category] += t.AmountF
 }
-// ... sort, collect into slice</code></pre>
+// ... sort, collect into slice</pre>
 
                 <p><b>F#</b> (4 lines, pipeline):</p>
-<pre><code>transfers
+<pre>transfers
 |> List.groupBy (fun t -> t.Category)
 |> List.map (fun (cat, ts) -> { Name = cat; Total = ts |> List.sumBy (fun t -> t.AmountF) })
-|> List.sortByDescending (fun nt -> nt.Total)</code></pre>
+|> List.sortByDescending (fun nt -> nt.Total)</pre>
 
                 <p>But this only mattered for aggregation and the main processing flow. CSV parsing, file I/O, HTML generation &mdash; all converged to the same imperative shape in every language.</p>
 
