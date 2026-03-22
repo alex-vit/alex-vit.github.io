@@ -100,11 +100,17 @@ a:hover {
 }
 
 .name::after {
-    content: '\2588';
+    content: '';
     animation: blink 1s step-end infinite;
-    color: var(--color-accent);
-    margin-left: 0.15em;
-    font-weight: 400;
+    display: inline-block;
+    width: 0.58em;
+    height: 0.9em;
+    margin-left: 0.12em;
+    background-color: var(--color-accent);
+    box-shadow:
+        0 0 8px rgba(51, 255, 0, 0.6),
+        0 0 20px rgba(51, 255, 0, 0.25);
+    vertical-align: -0.08em;
 }
 
 @keyframes blink {
