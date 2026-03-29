@@ -16,6 +16,10 @@ body {
     overflow-wrap: break-word;
 }
 
+h1:first-child {
+    margin-top: 0;
+}
+
 small {
     color: var(--color-text-muted);
 }
