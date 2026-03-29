@@ -29,4 +29,4 @@ All pages are standalone HTML files (no shared template/layout).
 
 ## Global scripts
 
-- Simple Analytics: `<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>` added before `</body>` on all 13 pages.
+- GoatCounter: `<script data-goatcounter="https://alexv.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>` added before `</body>` on all 13 pages.
