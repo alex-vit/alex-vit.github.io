@@ -27,6 +27,10 @@ All pages are standalone HTML files (no shared template/layout).
 
 - `useless-toolbox/canvas.html`
 
+## Frozen (do not modify)
+
+Everything under `useless-toolbox/` — these are relics kept as-is.
+
 ## Global scripts
 
 - GoatCounter: `<script data-goatcounter="https://alexv.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>` added before `</body>` on all 13 pages.
