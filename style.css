@@ -1,21 +1,21 @@
 :root {
     color-scheme: light dark;
-    --color-border: #ddd;
-    --color-surface: #f5f5f0;
-    --color-text: #111;
-    --color-text-soft: #333;
-    --color-text-muted: #777;
-    --color-accent: #018ADA;
+    --color-border: darkgray;
+    --color-surface: whitesmoke;
+    --color-text: black;
+    --color-text-soft: dimgray;
+    --color-text-muted: gray;
+    --color-accent: deepskyblue;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-border: #333;
+        --color-border: dimgray;
         --color-surface: #1a1a1a;
-        --color-text: #e0e0e0;
-        --color-text-soft: #ccc;
-        --color-text-muted: #888;
-        --color-accent: #4dabf0;
+        --color-text: gainsboro;
+        --color-text-soft: silver;
+        --color-text-muted: gray;
+        --color-accent: deepskyblue;
     }
 }
 
@@ -23,12 +23,12 @@ body {
     font-family: system-ui, sans-serif;
     max-width: 860px;
     margin: 0 auto;
-    padding: 1.5rem 1rem;
+    padding: 0.75rem 1rem;
     line-height: 1.6;
     overflow-wrap: break-word;
 }
 
-h1:first-child {
+body > header:first-child h1 {
     margin-top: 0;
 }
 
@@ -61,12 +61,12 @@ footer {
 .page-wide {
     max-width: 860px;
     margin: 0 auto;
-    padding: 1.5rem 1rem;
+    padding: 0.75rem 0;
 }
 
 .page-wide .content h1 {
     font-size: 1.5rem;
-    margin: 1.5rem 0 0.75rem;
+    margin: 0.5rem 0 0.75rem;
 }
 
 .page-wide .content h2 {
